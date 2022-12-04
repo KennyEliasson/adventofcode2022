@@ -1,9 +1,3 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace Solutions;
 
 public class Day2
