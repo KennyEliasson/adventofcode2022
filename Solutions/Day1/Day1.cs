@@ -33,7 +33,7 @@ public class Day1
     public void PartOne()
     {
         var elfs = CreateElfs();
-        
+
         _output.WriteLine($"Max calories is {elfs.Max(x => x.Calories)}");
         
     }
