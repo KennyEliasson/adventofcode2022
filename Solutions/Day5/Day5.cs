@@ -15,8 +15,7 @@ public class Day5 {
     {
         for (var i = 1; i <= 36; i += 4)
         {
-            IEnumerable<char> g = stackLines.Select(x => x[i]).Where(char.IsUpper).ToList();
-            yield return new Stack<char>(g.Reverse());
+            yield return new Stack<char>(stackLines.Select(x => x[i]).Where(char.IsUpper).Reverse());
         }
     }
     
