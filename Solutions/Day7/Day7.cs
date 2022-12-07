@@ -19,7 +19,6 @@ public class Day7 {
         var dirsWithLessSize = directories.Where(x => x.TotalFileSize.Value < 100000).ToList();
         
         _output.WriteLine($"The total size of directories with less than 100000 in size is {dirsWithLessSize.Sum(x => x.TotalFileSize.Value)}");
-
     }
 
     [Fact]
@@ -49,10 +48,10 @@ public class Day7 {
                 commands.Add(new CdCommand(args));
             else if (parts is ["$", "ls", ..])
                 commands.Add(new LsCommand());
-            else if (parts is ["dir", var name1])
-                commands.Last().Nodes.Add(new DirectoryNode(name1));
-            else if (parts is [var size, var name2]) 
-                commands.Last().Nodes.Add(new FileNode(name2, int.Parse(size)));
+            else if (parts is ["dir", var directoryName])
+                commands.Last().Nodes.Add(new DirectoryNodeInfo(directoryName));
+            else if (parts is [var size, var fileName]) 
+                commands.Last().Nodes.Add(new FileNodeInfo(fileName, int.Parse(size)));
         }
 
         return commands;
@@ -97,12 +96,12 @@ public class Directory
             size += dir.TotalFileSize.Value;
         }
 
-        size += Files.Sum(x => x.size);
+        size += Files.Sum(x => x.Size);
 
         return size;
     }
 
-    public List<(string fileName, int size)> Files { get; } = new();
+    public List<FileNodeInfo> Files { get; } = new();
     public Dictionary<string, Directory> Directories { get; } = new();
 }
 
@@ -132,7 +131,7 @@ public class LsCommand : Command
     {
         foreach (var node in Nodes)
         {
-            node.AddToStructure(directory);
+            node.AddToDirectory(directory);
         }
         
         return directory;
@@ -145,17 +144,17 @@ public abstract class Command
     public List<IFileSystemNode> Nodes { get; } = new();
 }
 
-public record FileNode(string Name, int Size) : IFileSystemNode
+public record FileNodeInfo(string Name, int Size) : IFileSystemNode
 {
-    public void AddToStructure(Directory directory)
+    public void AddToDirectory(Directory directory)
     {
-        directory.Files.Add((Name, Size));
+        directory.Files.Add(this);
     }
 }
 
-public record DirectoryNode(string Name) : IFileSystemNode
+public record DirectoryNodeInfo(string Name) : IFileSystemNode
 {
-    public void AddToStructure(Directory directory)
+    public void AddToDirectory(Directory directory)
     {
         directory.Directories.Add(Name, new Directory(Name, directory));
     }
@@ -163,6 +162,6 @@ public record DirectoryNode(string Name) : IFileSystemNode
 
 public interface IFileSystemNode
 {
-    void AddToStructure(Directory directory);
+    void AddToDirectory(Directory directory);
 }
 
