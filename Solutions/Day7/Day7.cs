@@ -44,17 +44,15 @@ public class Day7 {
         var commands = new List<Command>();
         foreach (var line in input)
         {
-            if (line.StartsWith("$"))
-            {
-                if (line.StartsWith("$ cd"))
-                    commands.Add(new CdCommand(line[5..]));
-                else
-                    commands.Add(new LsCommand());
-            }
-            else
-            {
-                commands.Last().AddInput(line);    
-            }
+            var parts = line.Split(' ');
+            if (parts is ["$", "cd", var args])
+                commands.Add(new CdCommand(args));
+            else if (parts is ["$", "ls", ..])
+                commands.Add(new LsCommand());
+            else if (parts is ["dir", var name1])
+                commands.Last().Nodes.Add(new DirectoryNode(name1));
+            else if (parts is [var size, var name2]) 
+                commands.Last().Nodes.Add(new FileNode(name2, int.Parse(size)));
         }
 
         return commands;
@@ -69,7 +67,7 @@ public class Day7 {
 
         foreach (var command in commands.Skip(1)) // The first one is always navigating to root
         {
-            currDir = command.Execute(currDir);
+            currDir = command.CreateDirectoryStructure(currDir);
             directories.Add(currDir);
         }
 
@@ -116,7 +114,7 @@ public class CdCommand : Command
     }
 
     public string Argument { get; }
-    public override Directory Execute(Directory directory)
+    public override Directory CreateDirectoryStructure(Directory directory)
     {
         if (Argument == "/")
             throw new NotImplementedException();
@@ -130,34 +128,41 @@ public class CdCommand : Command
 
 public class LsCommand : Command
 {
-    public override Directory Execute(Directory directory)
+    public override Directory CreateDirectoryStructure(Directory directory)
     {
-        foreach (var input in Input)
+        foreach (var node in Nodes)
         {
-            var parts = input.Split(" ", StringSplitOptions.TrimEntries);
-            
-            if (parts[0].StartsWith("dir"))
-            {
-                directory.Directories.Add(parts[1], new Directory(parts[1], directory));
-            }
-            else
-            {
-                directory.Files.Add((parts[1], int.Parse(parts[0])));
-            }
+            node.AddToStructure(directory);
         }
-
+        
         return directory;
     }
 }
 
 public abstract class Command
 {
-    public abstract Directory Execute(Directory directory);
-    public List<string> Input { get; } = new();
-    
-    public void AddInput(string input)
+    public abstract Directory CreateDirectoryStructure(Directory directory);
+    public List<IFileSystemNode> Nodes { get; } = new();
+}
+
+public record FileNode(string Name, int Size) : IFileSystemNode
+{
+    public void AddToStructure(Directory directory)
     {
-        Input.Add(input);
+        directory.Files.Add((Name, Size));
     }
+}
+
+public record DirectoryNode(string Name) : IFileSystemNode
+{
+    public void AddToStructure(Directory directory)
+    {
+        directory.Directories.Add(Name, new Directory(Name, directory));
+    }
+}
+
+public interface IFileSystemNode
+{
+    void AddToStructure(Directory directory);
 }
 
