@@ -79,31 +79,25 @@ public class Knot
 
     public void Follow(Knot knot)
     {
-        var diffX = Math.Abs(knot.X - X);
-        var diffY = Math.Abs(knot.Y - Y);
-
-        if (knot.X == X && diffY > 1)
+        if (knot.X == X)
         {
             var steps = knot.Y - Y;
-            Y = steps > 0 ? Y + 1 : Y - 1;
+            Y = steps > 1 ? Y + 1 : steps < -1 ? Y - 1 : Y;
         } 
-        else if (knot.Y == Y && diffX > 1)
+        else if (knot.Y == Y)
         {
             var steps = knot.X - X;
-            X = steps > 0 ? X + 1 : X - 1;
+            X = steps > 1 ? X + 1 : steps < -1 ? X - 1 : X;
         }
         else
         {
-            if (Math.Abs(diffX + diffY) < 3)
+            if (Math.Abs(knot.X - X) + Math.Abs(knot.Y - Y) < 3)
             {
                 return;
             }
 
-            var stepsX = knot.X - X;
-            var stepsY = knot.Y - Y;
-
-            X = stepsX > 0 ? X + 1 : X - 1;
-            Y = stepsY > 0 ? Y + 1 : Y - 1;
+            X = knot.X - X > 0 ? X + 1 : X - 1;
+            Y = knot.Y - Y > 0 ? Y + 1 : Y - 1;
         }
         
         VisitedPositions.Add((X, Y));
