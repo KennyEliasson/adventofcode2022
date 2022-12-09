@@ -16,8 +16,8 @@ public class Day9
         
         var actions = ParseMoveCommands(lines);
 
-        var head = new Knot(0, 0);
-        var tail = new Knot(head.X, head.Y);
+        var head = new Knot();
+        var tail = new Knot();
 
         foreach (var action in actions)
         {
@@ -35,7 +35,7 @@ public class Day9
         
         var actions = ParseMoveCommands(lines);
 
-        var knots = Enumerable.Range(0, 10).Select(_ => new Knot(0, 0)).ToList();
+        var knots = Enumerable.Range(0, 10).Select(_ => new Knot()).ToList();
 
         foreach (var action in actions)
         {
@@ -70,10 +70,8 @@ public class Knot
     public int Y { get; set; }
     public HashSet<(int x, int y)> VisitedPositions { get; } = new();
 
-    public Knot(int x, int y)
+    public Knot()
     {
-        X = x;
-        Y = y;
         VisitedPositions.Add((X, Y));
     }
 
@@ -89,15 +87,10 @@ public class Knot
             var steps = knot.X - X;
             X = steps > 1 ? X + 1 : steps < -1 ? X - 1 : X;
         }
-        else
+        else if(Math.Abs(knot.X - X) + Math.Abs(knot.Y - Y) > 2)
         {
-            if (Math.Abs(knot.X - X) + Math.Abs(knot.Y - Y) < 3)
-            {
-                return;
-            }
-
-            X = knot.X - X > 0 ? X + 1 : X - 1;
-            Y = knot.Y - Y > 0 ? Y + 1 : Y - 1;
+            X += Math.Sign(knot.X - X);
+            Y += Math.Sign(knot.Y- Y);
         }
         
         VisitedPositions.Add((X, Y));
