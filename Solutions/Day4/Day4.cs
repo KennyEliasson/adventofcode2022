@@ -1,13 +1,9 @@
 namespace Solutions;
 
-public class Day4 {
-
-    private readonly ITestOutputHelper _output;
-
-    public Day4(ITestOutputHelper output)
-    {
-        _output = output;
-    }
+public class Day4 : AdventOfCodeTests
+{
+    public Day4(ITestOutputHelper output) : base(output)
+    { }
 
     private IEnumerable<(HashSet<int> firstRange, HashSet<int> secondRange)> CreatePairs(IEnumerable<string> lines)
     {
@@ -24,21 +20,16 @@ public class Day4 {
         }
     }
 
-    [Fact]
-    public void PartOne()
+    public override void PartOne(List<string> lines)
     {
-        var lines = File.ReadAllLines("Day4/input.txt");
-
         var pairs = CreatePairs(lines);
         var fullyContains = pairs.Count(pair => pair.firstRange.IsSubsetOf(pair.secondRange) || pair.firstRange.IsSubsetOf(pair.firstRange));
 
         _output.WriteLine($"Fully contains count is {fullyContains}");
     }
 
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> lines)
     {
-        var lines = File.ReadAllLines("Day4/input.txt");
         var pairs = CreatePairs(lines);
 
         var overlaps = pairs.Count(pair => pair.firstRange.Overlaps(pair.secondRange) || pair.firstRange.Overlaps(pair.firstRange));

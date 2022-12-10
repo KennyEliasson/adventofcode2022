@@ -1,18 +1,12 @@
 namespace Solutions;
 
-public class Day10
+public class Day10 : AdventOfCodeTests
 {
-    private readonly ITestOutputHelper _output;
-
-    public Day10(ITestOutputHelper output)
-    {
-        _output = output;
-    }
+    public Day10(ITestOutputHelper output) : base(output)
+    { }
     
-    [Fact]
-    public void PartOne()
+    public override void PartOne(List<string> lines)
     {
-        var lines = File.ReadLines("Day10/input.txt").ToList();
         var instructions = ParseInstructions(lines);
 
         int cycle = 0;
@@ -49,36 +43,8 @@ public class Day10
         }));
     }
 
-    public class Noop : Instruction
+    public override void PartTwo(List<string> lines)
     {
-        public override int Cycles => 1;
-    }
-
-    public class Add : Instruction
-    {
-        public Add(int value)
-        {
-            Value = value;
-        }
-
-        public override int Cycles => 2;
-        public int Value { get; }
-        public override int Execute(int x)
-        {
-            return x + Value;
-        }
-    }
-    
-    public abstract class Instruction
-    {
-        public abstract int Cycles { get; }
-        public virtual int Execute(int x) => x;
-    }
-
-    [Fact]
-    public void PartTwo()
-    {
-        var lines = File.ReadLines("Day10/input.txt").ToList();
         var instructions = ParseInstructions(lines);
 
         int cycle = 0;
@@ -107,5 +73,20 @@ public class Day10
         {
             _output.WriteLine(string.Join(null, chunk));
         }
+    }
+}
+
+public abstract record Instruction(int Cycles)
+{
+    public virtual int Execute(int x) => x;
+}
+
+public record Noop() : Instruction(1);
+
+public record Add(int Value) : Instruction(2)
+{
+    public override int Execute(int x)
+    {
+        return x + Value;
     }
 }

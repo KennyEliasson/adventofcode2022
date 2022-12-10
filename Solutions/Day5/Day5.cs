@@ -2,14 +2,10 @@ using System.Text.RegularExpressions;
 
 namespace Solutions;
 
-public class Day5 {
-
-    private readonly ITestOutputHelper _output;
-
-    public Day5(ITestOutputHelper output)
-    {
-        _output = output;
-    }
+public class Day5 : AdventOfCodeTests
+{
+    public Day5(ITestOutputHelper output) : base(output)
+    { }
 
     private IEnumerable<Stack<char>> CreateStacks(IEnumerable<string> stackLines)
     {
@@ -29,13 +25,10 @@ public class Day5 {
         }
     }
 
-    [Fact]
-    public void PartOne()
+    public override void PartOne(List<string> lines)
     {
-        var lines = File.ReadAllLines("Day5/input.txt");
-        
-        var stacks = CreateStacks(lines[..9]).ToList();
-        var instructions = CreateInstructions(lines[10..]);
+        var stacks = CreateStacks(lines.ToArray()[..9]).ToList();
+        var instructions = CreateInstructions(lines.ToArray()[10..]);
 
         foreach (var (move, from, to) in instructions)
         {
@@ -48,13 +41,10 @@ public class Day5 {
         _output.WriteLine($"The order is {string.Join("", stacks.Select(x => x.Pop()))}");
     }
 
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> lines)
     {
-        var lines = File.ReadAllLines("Day5/input.txt");
-        
-        var stacks = CreateStacks(lines[..9]).ToList();
-        var instructions = CreateInstructions(lines[10..]);
+        var stacks = CreateStacks(lines.ToArray()[..9]).ToList();
+        var instructions = CreateInstructions(lines.ToArray()[10..]);
 
         foreach (var (move, from, to) in instructions)
         {

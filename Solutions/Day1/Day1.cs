@@ -1,53 +1,37 @@
 namespace Solutions;
 
-public class Day1
+public class Day1 : AdventOfCodeTests
 {
-    private readonly ITestOutputHelper _output;
+    public Day1(ITestOutputHelper output) : base(output)
+    { }
 
-    public Day1(ITestOutputHelper output)
+    private IEnumerable<int> CalculateCalories(List<string> lines)
     {
-        _output = output;
-    }
-
-    private IEnumerable<Elf> CreateElfs()
-    {
-        var lines = File.ReadAllLines("Day1/input.txt");
-        
-        var currentElf = new Elf();
+        var current = 0;
         foreach (var line in lines)
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                yield return currentElf;
-                currentElf = new Elf();
+                yield return current;
+                current = 0;
                 continue;
             }
 
-            currentElf.Calories += int.Parse(line);
+            current += int.Parse(line);
         }
 
-        yield return currentElf;
+        yield return current;
     }
 
-    [Fact]
-    public void PartOne()
+    public override void PartOne(List<string> lines)
     {
-        var elfs = CreateElfs();
-
-        _output.WriteLine($"Max calories is {elfs.Max(x => x.Calories)}");
-        
+        var elfs = CalculateCalories(lines);
+        _output.WriteLine($"Max calories is {elfs.Max(x => x)}");
     }
     
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> lines)
     {
-        var elfs = CreateElfs();
-        _output.WriteLine($"Top three elves with most calories are carrying {elfs.OrderByDescending(x => x.Calories).Take(3).Sum(x => x.Calories)} calories");
-        
+        var elfs = CalculateCalories(lines);
+        _output.WriteLine($"Top three elves with most calories are carrying {elfs.OrderByDescending(x => x).Take(3).Sum(x => x)} calories");
     }
-}
-
-public class Elf
-{
-    public int Calories { get; set; }
 }

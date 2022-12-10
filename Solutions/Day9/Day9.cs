@@ -1,19 +1,12 @@
 namespace Solutions;
 
-public class Day9
+public class Day9 : AdventOfCodeTests
 {
-    private readonly ITestOutputHelper _output;
-
-    public Day9(ITestOutputHelper output)
-    {
-        _output = output;
-    }
+    public Day9(ITestOutputHelper output) : base(output)
+    { }
     
-    [Fact]
-    public void PartOne()
+    public override void PartOne(List<string> lines)
     {
-        var lines = File.ReadLines("Day9/input.txt").ToList();
-        
         var actions = ParseMoveCommands(lines);
 
         var head = new Knot();
@@ -28,11 +21,8 @@ public class Day9
         
     }
     
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> lines)
     {
-        var lines = File.ReadLines("Day9/input.txt").ToList();
-        
         var actions = ParseMoveCommands(lines);
 
         var knots = Enumerable.Range(0, 10).Select(_ => new Knot()).ToList();

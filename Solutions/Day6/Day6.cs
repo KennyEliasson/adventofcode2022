@@ -1,29 +1,19 @@
 namespace Solutions;
 
-public class Day6 {
+public class Day6 : AdventOfCodeTests
+{
+    public Day6(ITestOutputHelper output) : base(output)
+    { }
 
-    private readonly ITestOutputHelper _output;
-
-    public Day6(ITestOutputHelper output)
+    public override void PartOne(List<string> input)
     {
-        _output = output;
-    }
-
-    [Fact]
-    public void PartOne()
-    {
-        var input = File.ReadAllText("Day6/input.txt");
-        
-        var position = FindFirstDistinctCharInRange(input, 4);
-            
+        var position = FindFirstDistinctCharInRange(input[0], 4);
         _output.WriteLine($"Start of data is from position {position}");
     }
 
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> input)
     {
-        var input = File.ReadAllText("Day6/input.txt");
-        var position = FindFirstDistinctCharInRange(input, 14);
+        var position = FindFirstDistinctCharInRange(input[0], 14);
 
         _output.WriteLine($"Start of data is from position {position}");
     }

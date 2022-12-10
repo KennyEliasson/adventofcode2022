@@ -1,18 +1,12 @@
 namespace Solutions;
 
-public class Day7 {
+public class Day7 : AdventOfCodeTests 
+{
+    public Day7(ITestOutputHelper output) : base(output)
+    { }
 
-    private readonly ITestOutputHelper _output;
-
-    public Day7(ITestOutputHelper output)
+    public override void PartOne(List<string> input)
     {
-        _output = output;
-    }
-
-    [Fact]
-    public void PartOne()
-    {
-        var input = File.ReadLines("Day7/input.txt");
         var commands = ParseCommands(input);
         var (root, directories) = CreateDirectoryStructure(commands);
 
@@ -21,10 +15,8 @@ public class Day7 {
         _output.WriteLine($"The total size of directories with less than 100000 in size is {dirsWithLessSize.Sum(x => x.TotalFileSize.Value)}");
     }
 
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> input)
     {
-        var input = File.ReadLines("Day7/input.txt");
         var commands = ParseCommands(input);
         var (root, directories) = CreateDirectoryStructure(commands);
 

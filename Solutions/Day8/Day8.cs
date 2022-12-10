@@ -1,27 +1,13 @@
 namespace Solutions;
 
-public class Day8
+public class Day8 : AdventOfCodeTests
 {
-    private readonly ITestOutputHelper _output;
 
-    public Day8(ITestOutputHelper output)
+    public Day8(ITestOutputHelper output) : base(output)
+    { }
+    
+    public override void PartOne(List<string> lines)
     {
-        _output = output;
-    }
-
-    private record Tree(int Height, int Row, int Column)
-    {
-        public bool AtTheEdge(int maxRows, int maxColumns)
-        {
-            return Row == 0 || Column == 0 || Row == maxRows - 1 || Column == maxColumns - 1;
-        }
-    }
-
-    [Fact]
-    public void PartOne()
-    {
-        var lines = File.ReadLines("Day8/input.txt").ToList();
-        
         var columnCount = lines[0].Length;
         var rowCount = lines.Count;
         
@@ -71,11 +57,8 @@ public class Day8
         return trees;
     }
 
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> lines)
     {
-        var lines = File.ReadLines("Day8/input.txt").ToList();
-        
         var columnCount = lines[0].Length;
         var rowCount = lines.Count;
         
@@ -107,6 +90,14 @@ public class Day8
         }
 
         return treeLine.Count;
+    }
+}
+
+internal record Tree(int Height, int Row, int Column)
+{
+    public bool AtTheEdge(int maxRows, int maxColumns)
+    {
+        return Row == 0 || Column == 0 || Row == maxRows - 1 || Column == maxColumns - 1;
     }
 }
 

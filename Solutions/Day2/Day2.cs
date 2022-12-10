@@ -1,13 +1,9 @@
 namespace Solutions;
 
-public class Day2
+public class Day2 : AdventOfCodeTests
 {
-    private readonly ITestOutputHelper _output;
-
-    public Day2(ITestOutputHelper output)
-    {
-        _output = output;
-    }
+    public Day2(ITestOutputHelper output) : base(output)
+    { }
 
     private record Round(char Opponent, char Player)
     {
@@ -68,21 +64,16 @@ public class Day2
         }
     }
 
-    [Fact]
-    public void PartOne()
+    public override void PartOne(List<string> lines)
     {
-        var lines = File.ReadAllLines("Day2/input.txt");
         var rounds = lines.Select(line => new Round(line[0], line[2])).ToList();
         var points = rounds.Sum(x => x.CalculateScore());
         _output.WriteLine($"The score is {points}");
     }
     
-    [Fact]
-    public void PartTwo()
+    public override void PartTwo(List<string> lines)
     {
-        var lines = File.ReadAllLines("Day2/input.txt");
         var rounds = lines.Select(line => new RoundFactory().CreateRound(line[0], line[2])).ToList();
-        
         var points = rounds.Sum(x => x.CalculateScore());
         _output.WriteLine($"The score is {points}");
     }
