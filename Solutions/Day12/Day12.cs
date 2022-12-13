@@ -19,6 +19,7 @@ public class Day12 : AdventOfCodeTests
         _output.WriteLine(shortestPath.ToString());
     }
 
+    // after submitting I realized that going from E to a would probably be quicker.
     public override void PartTwo(List<string> lines)
     {
         var (grid, positions) = CreateMaps(lines);
