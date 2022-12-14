@@ -9,7 +9,7 @@ public class Day14 : AdventOfCodeTests
 
     public override void PartOne(List<string> lines)
     {
-        var grid = InitializeCave();
+        var grid = MatrixExtensions.Create(1000, 1000, '.');
 
         var lowestPositionOfRock = CreateRocksInCave(lines, grid);
         
@@ -48,7 +48,7 @@ public class Day14 : AdventOfCodeTests
     
     public override void PartTwo(List<string> lines)
     {
-        var grid = InitializeCave();
+        var grid = MatrixExtensions.Create(1000, 1000, '.');
 
         var lowestPositionOfRock = CreateRocksInCave(lines, grid);
 
@@ -91,11 +91,9 @@ public class Day14 : AdventOfCodeTests
     {
         var lowestRow = 0;
 
-        foreach (var line in lines)
+        foreach (var positions in lines.Select(line => line.Split(" -> ")))
         {
-            var positions = line.Split(" -> ");
-
-            for (int i = 0; i < positions.Length - 1; i++)
+            for (var i = 0; i < positions.Length - 1; i++)
             {
                 var start = GetCoord(positions[i]);
                 var end = GetCoord(positions[i + 1]);
@@ -127,29 +125,14 @@ public class Day14 : AdventOfCodeTests
 
         return lowestRow;
     }
-
-    private static char[,] InitializeCave()
-    {
-        var grid = new char[1000, 1000];
-        for (int row = 0; row < grid.GetUpperBound(0); row++)
-        {
-            for (int column = 0; column < grid.GetUpperBound(1); column++)
-            {
-                grid[row, column] = '.';
-            }
-        }
-
-        return grid;
-    }
+    
 
     private (int Column, int Row) GetCoord(string position)
     {
         var split = position.Split(',');
         return (int.Parse(split[0]), int.Parse(split[1]));
     }
-    
    
-
     public class Sand
     {
         public int Row { get; set; }

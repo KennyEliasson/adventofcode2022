@@ -17,6 +17,18 @@ public static class MatrixExtensions
         return true;
     }
 
+    public static T[,] Create<T>(int rows, int cols, T defaultVal)
+    {
+        var grid = new T[rows, cols];
+        for (int row = 0; row < grid.GetUpperBound(0); row++)
+        {
+            for (int column = 0; column < grid.GetUpperBound(1); column++)
+            {
+                grid[row, column] = defaultVal;
+            }
+        }
+    }
+
     public static IEnumerable<StringBuilder> Write<T>(this T[,] matrix)
     {
         for (int row = 0; row < matrix.GetUpperBound(0); row++)
