@@ -1,15 +1,10 @@
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using Solutions;
 
 public class Day13 : AdventOfCodeTests
 {
-    private readonly JsonSerializerOptions _serializerOptions;
-
     public Day13(ITestOutputHelper output) : base(output)
     {
-        _serializerOptions = new JsonSerializerOptions() {NumberHandling = JsonNumberHandling.Strict};
+        
     }
 
     public override void PartOne(List<string> lines)
@@ -22,7 +17,7 @@ public class Day13 : AdventOfCodeTests
             var left = JsonNode.Parse(groups[i][0]);
             var right = JsonNode.Parse(groups[i][1]);
 
-            var result = Compare(left, right);
+            var result = Calculate(left, right);
             if (result < 0)
             {
                 list.Add(i+1);
@@ -34,32 +29,26 @@ public class Day13 : AdventOfCodeTests
     
     public override void PartTwo(List<string> lines)
     {
+        
     }
 
-    private int Compare(JsonNode left, JsonNode right)
+    private int Calculate(JsonNode left, JsonNode right)
     {
         if (left is JsonValue && right is JsonValue)
         {
             return left.GetValue<int>() - right.GetValue<int>();
         }
 
-        var leftArray = left as JsonArray ?? new JsonArray((int) left);
-        var rightArray = right as JsonArray ?? new JsonArray((int) right);
+        var leftArray = left as JsonArray ?? new JsonArray(left.GetValue<int>());
+        var rightArray = right as JsonArray ?? new JsonArray(right.GetValue<int>());
 
-        var comparisons = leftArray.Zip(rightArray).Select(p => Compare(p.First, p.Second));
-        var result = comparisons.FirstOrDefault(calculation => calculation != 0);
+        var calculations = leftArray.Zip(rightArray).Select(p => Calculate(p.First, p.Second));
+        var result = calculations.FirstOrDefault(calculation => calculation != 0);
         if (result == 0)
         {
             return leftArray.Count - rightArray.Count;
         }
 
         return result;
-    }
-    
-    
-
-    public override void PartTwo(List<string> lines)
-    {
-        
     }
 }

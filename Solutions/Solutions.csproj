@@ -10,6 +10,7 @@
     <ItemGroup>
         <Using Include="Xunit" />
         <Using Include="Xunit.Abstractions" />
+        <Using Include="Solutions" />
     </ItemGroup>
 
     <ItemGroup>
@@ -100,6 +101,12 @@
       </None>
       <None Update="Day13\input.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Day14\example.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Day14\input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 

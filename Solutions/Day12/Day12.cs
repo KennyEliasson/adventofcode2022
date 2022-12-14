@@ -1,5 +1,3 @@
-using Solutions;
-
 public class Day12 : AdventOfCodeTests
 {
     public Day12(ITestOutputHelper output) : base(output)
@@ -119,19 +117,3 @@ public class Day12 : AdventOfCodeTests
 }
 
 public record Position(char Height, int Col, int Row, int Steps = 0);
-
-public static class MatrixExtensions
-{
-    public static bool TryGet<T>(this T[,] matrix, int column, int row, out T? value)
-    {
-        value = default;
-        if (column < 0 || row < 0)
-            return false;
-
-        if (column > matrix.GetUpperBound(0) || row > matrix.GetUpperBound(1))
-            return false;
-
-        value = matrix[column, row];
-        return true;
-    }
-}
