@@ -13,7 +13,7 @@ public class Day14 : AdventOfCodeTests
 
         var lowestPositionOfRock = CreateRocksInCave(lines, grid);
         
-        var sandList = new List<Sand>() { new(0, 500)};
+        var sandList = new List<Sand>();
         var canSpawnSand = true;
         while (true)
         {
@@ -37,7 +37,7 @@ public class Day14 : AdventOfCodeTests
             }
         }
         
-        _output.WriteLine($"A total of {sandList.Count-2 } units of sand ");
+        _output.WriteLine($"A total of {sandList.Count-1 } units of sand ");
 
         foreach (var builder in grid.Write())
         {
@@ -57,7 +57,7 @@ public class Day14 : AdventOfCodeTests
             grid[lowestPositionOfRock + 2, i] = '#';
         }
         
-        var sandList = new List<Sand>() { new(0, 500)};
+        var sandList = new List<Sand>();
         var canSpawnSand = true;
         while (true)
         {
@@ -79,7 +79,7 @@ public class Day14 : AdventOfCodeTests
             }
         }
         
-        _output.WriteLine($"A total of {sandList.Count-1} units of sand ");
+        _output.WriteLine($"A total of {sandList.Count} units of sand ");
 
         foreach (var builder in grid.Write())
         {

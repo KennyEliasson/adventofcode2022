@@ -29,6 +29,18 @@ public class Day13 : AdventOfCodeTests
     
     public override void PartTwo(List<string> lines)
     {
+        var groups = lines.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => JsonNode.Parse(x)).ToList();
+        var json2 = JsonNode.Parse("[[2]]");
+        var json6 = JsonNode.Parse("[[6]]");
+        groups.Add(json2);
+        groups.Add(json6);
+
+        groups.Sort(Calculate);
+
+        var index2 = groups.IndexOf(json2)+1;
+        var index6 = groups.IndexOf(json6)+1;
+        
+        _output.WriteLine($"{index2*index6}");
         
     }
 
