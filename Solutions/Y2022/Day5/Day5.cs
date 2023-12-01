@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day5 : AdventOfCodeTests
 {
@@ -14,7 +14,7 @@ public class Day5 : AdventOfCodeTests
             yield return new Stack<char>(stackLines.Select(x => x[i]).Where(char.IsUpper).Reverse());
         }
     }
-    
+
     private IEnumerable<(int amout, int from, int to)> CreateInstructions(IEnumerable<string> instructionLines)
     {
         var regex = new Regex("move (\\d+) from (\\d+) to (\\d+)");
@@ -33,7 +33,7 @@ public class Day5 : AdventOfCodeTests
         foreach (var (move, from, to) in instructions)
         {
             for (var i = 0; i < move; i++)
-            {   
+            {
                 stacks[to-1].Push(stacks[from - 1].Pop());
             }
         }
@@ -50,7 +50,7 @@ public class Day5 : AdventOfCodeTests
         {
             var crates = new List<char>();
             for (var i = 0; i < move; i++)
-            {   
+            {
                 crates.Add(stacks[from - 1].Pop());
             }
 

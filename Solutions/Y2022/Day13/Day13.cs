@@ -1,10 +1,12 @@
 using System.Text.Json.Nodes;
 
+namespace Solutions.Y2022;
+
 public class Day13 : AdventOfCodeTests
 {
     public Day13(ITestOutputHelper output) : base(output)
     {
-        
+
     }
 
     public override void PartOne(List<string> lines)
@@ -26,7 +28,7 @@ public class Day13 : AdventOfCodeTests
         }
         _output.WriteLine(list.Sum().ToString());
     }
-    
+
     public override void PartTwo(List<string> lines)
     {
         var groups = lines.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => JsonNode.Parse(x)).ToList();
@@ -39,9 +41,9 @@ public class Day13 : AdventOfCodeTests
 
         var index2 = groups.IndexOf(json2)+1;
         var index6 = groups.IndexOf(json6)+1;
-        
+
         _output.WriteLine($"{index2*index6}");
-        
+
     }
 
     private int Calculate(JsonNode left, JsonNode right)

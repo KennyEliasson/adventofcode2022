@@ -1,10 +1,10 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day9 : AdventOfCodeTests
 {
     public Day9(ITestOutputHelper output) : base(output)
     { }
-    
+
     public override void PartOne(List<string> lines)
     {
         var actions = ParseMoveCommands(lines);
@@ -16,11 +16,11 @@ public class Day9 : AdventOfCodeTests
         {
             action.Move(head, tail);
         }
-        
+
         _output.WriteLine(tail.VisitedPositions.Count.ToString());
-        
+
     }
-    
+
     public override void PartTwo(List<string> lines)
     {
         var actions = ParseMoveCommands(lines);
@@ -31,7 +31,7 @@ public class Day9 : AdventOfCodeTests
         {
             action.Move(knots);
         }
-        
+
         _output.WriteLine($"{knots.Last().VisitedPositions.Count}");
     }
 
@@ -71,7 +71,7 @@ public class Knot
         {
             var steps = knot.Y - Y;
             Y = steps > 1 ? Y + 1 : steps < -1 ? Y - 1 : Y;
-        } 
+        }
         else if (knot.Y == Y)
         {
             var steps = knot.X - X;
@@ -82,7 +82,7 @@ public class Knot
             X += Math.Sign(knot.X - X);
             Y += Math.Sign(knot.Y- Y);
         }
-        
+
         VisitedPositions.Add((X, Y));
     }
 }
@@ -103,7 +103,7 @@ public class MoveCommand
             tail.Follow(head);
         }
     }
-    
+
     public void Move(List<Knot> knots)
     {
         for (int step = 0; step < Steps; step++)
@@ -114,12 +114,12 @@ public class MoveCommand
                 // Move all tails
                 var currentHead = knots[index];
                 var tail = knots[index+1];
-                
+
                 tail.Follow(currentHead);
             }
         }
     }
-    
+
     public Action<Knot> Movement { get; }
     public int Steps { get; }
 }

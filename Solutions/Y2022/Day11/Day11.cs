@@ -1,6 +1,6 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
-public class Day11 
+public class Day11
 {
     private readonly ITestOutputHelper _output;
 
@@ -8,12 +8,12 @@ public class Day11
     {
         _output = output;
     }
-    
+
     [Fact]
     public void PartOne()
     {
         var monkeys = MyInputMonkeys();
-        
+
         for (int i = 0; i < 20; i++)
         {
             foreach (var monkey in monkeys)
@@ -35,8 +35,8 @@ public class Day11
     public void PartTwo()
     {
         var monkeys = MyInputMonkeys();
-        
-        // This is the super modulo that I've been looking for all day. 
+
+        // This is the super modulo that I've been looking for all day.
         // Ive been looking for square roots, using BigIntegers (too big number anyway!)
         // Tried different modulo like Sum all items at the start, at each round.
         // Summing DividBy etc etc, what works in the end was to Aggregate DivisibleBy
@@ -65,7 +65,7 @@ public class Day11
             new Monkey(23, old => old * 19, new long[] {79, 98}, 2, 3),
             new Monkey(19, old => old + 6, new long[] {54, 65, 75, 74}, 2, 0),
             new Monkey(13, old => old * old, new long[] {79, 60, 97}, 1, 3),
-            new Monkey(17, old => old + 3, new long[] {74}, 0, 1)            
+            new Monkey(17, old => old + 3, new long[] {74}, 0, 1)
         };
     }
 
@@ -81,7 +81,7 @@ public class Day11
             new Monkey(5, old => old + 3, new long[]{ 96, 52, 52, 94, 76, 51, 57 }, 7, 3),
             new Monkey(13, old => old + 5, new long[]{ 75 }, 4, 2),
             new Monkey(19, old => old + 1, new long[]{ 83, 75 }, 2, 6)
-            
+
         };
     }
 }
@@ -120,5 +120,5 @@ public class Monkey
     public long InspectCount { get; set; }
     public Func<long, long> Inspect { get; set; }
     public Queue<long> Items { get; set; }
-    public Dictionary<bool, int> ShouldThrowTo { get; set; }    
+    public Dictionary<bool, int> ShouldThrowTo { get; set; }
 }

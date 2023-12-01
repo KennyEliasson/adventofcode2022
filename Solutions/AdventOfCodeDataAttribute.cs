@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using Xunit.Sdk;
 
 namespace Solutions;
@@ -14,6 +15,13 @@ public class AdventOfCodeDataAttribute : DataAttribute
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        yield return new [] { File.ReadAllLines($"{testMethod.DeclaringType.Name}/{_fileName}.txt").ToList() };
+        var ns = testMethod.DeclaringType.Namespace ?? "";
+        ns = ns.Replace("Solutions.", "");
+        ns = ns.Replace("Solutions", "");
+        ns = ns.Replace('.', Path.PathSeparator);
+
+        var path = Path.Combine(ns, testMethod.DeclaringType.Name, $"{_fileName}.txt");
+
+        yield return new [] { File.ReadAllLines(path).ToList() };
     }
 }

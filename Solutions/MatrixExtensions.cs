@@ -27,6 +27,8 @@ public static class MatrixExtensions
                 grid[row, column] = defaultVal;
             }
         }
+
+        return grid;
     }
 
     public static IEnumerable<StringBuilder> Write<T>(this T[,] matrix)
@@ -34,7 +36,7 @@ public static class MatrixExtensions
         for (int row = 0; row < matrix.GetUpperBound(0); row++)
         {
             var sb = new StringBuilder();
-            
+
             for (int column = 0; column < matrix.GetUpperBound(1); column++)
             {
                 sb.Append(matrix[row, column]);

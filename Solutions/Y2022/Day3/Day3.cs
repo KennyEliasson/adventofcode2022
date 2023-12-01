@@ -1,10 +1,10 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day3 : AdventOfCodeTests
 {
     public Day3(ITestOutputHelper output) : base(output)
     { }
-    
+
     public override void PartOne(List<string> lines)
     {
         char FindItemsThatAreInBoth(string line)
@@ -13,7 +13,7 @@ public class Day3 : AdventOfCodeTests
                 .Intersect(line[(line.Length / 2)..].Distinct())
                 .First();
         }
-        
+
         _output.WriteLine($"The sum of items is {lines.Select(FindItemsThatAreInBoth).Sum(CharToPrio)}");
     }
 

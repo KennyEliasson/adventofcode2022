@@ -1,4 +1,4 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day1 : AdventOfCodeTests
 {
@@ -28,7 +28,7 @@ public class Day1 : AdventOfCodeTests
         var elfs = CalculateCalories(lines);
         _output.WriteLine($"Max calories is {elfs.Max(x => x)}");
     }
-    
+
     public override void PartTwo(List<string> lines)
     {
         var elfs = CalculateCalories(lines);

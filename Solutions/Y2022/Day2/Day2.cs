@@ -1,4 +1,4 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day2 : AdventOfCodeTests
 {
@@ -10,7 +10,7 @@ public class Day2 : AdventOfCodeTests
         // A = Rock
         // B = Paper
         // C = Scissor
-    
+
         // X = Rock
         // Y = Paper
         // Z = Scissor
@@ -26,7 +26,7 @@ public class Day2 : AdventOfCodeTests
             {('C', 'Y'), 0},
             {('C', 'Z'), 3},
         };
-        
+
         private static readonly Dictionary<char, short> ShapePoints = new()
         {
             {'X', 1}, {'Y', 2}, {'Z', 3},
@@ -38,7 +38,7 @@ public class Day2 : AdventOfCodeTests
             return Outcomes[(Opponent, Player)] + points;
         }
     }
-    
+
     private class RoundFactory
     {
         // X = loose
@@ -56,7 +56,7 @@ public class Day2 : AdventOfCodeTests
             {('C', 'Y'), 'Z'},
             {('C', 'Z'), 'X'},
         };
-        
+
         public Round CreateRound(char Opponent, char Player)
         {
             var playerShape = Outcomes[(Opponent, Player)];
@@ -70,7 +70,7 @@ public class Day2 : AdventOfCodeTests
         var points = rounds.Sum(x => x.CalculateScore());
         _output.WriteLine($"The score is {points}");
     }
-    
+
     public override void PartTwo(List<string> lines)
     {
         var rounds = lines.Select(line => new RoundFactory().CreateRound(line[0], line[2])).ToList();

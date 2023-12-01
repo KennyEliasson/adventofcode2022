@@ -1,3 +1,5 @@
+namespace Solutions.Y2022;
+
 public class Day12 : AdventOfCodeTests
 {
     public Day12(ITestOutputHelper output) : base(output)
@@ -13,7 +15,7 @@ public class Day12 : AdventOfCodeTests
         var itemCovered = new HashSet<Position>();
 
         var shortestPath = Traverse(queue, itemCovered, grid);
-        
+
         _output.WriteLine(shortestPath.ToString());
     }
 
@@ -33,9 +35,9 @@ public class Day12 : AdventOfCodeTests
 
             var steps = Traverse(queue, itemCovered, grid, shortestPaths.Any() ? shortestPaths.Min() : null);
             if(steps.HasValue)
-                shortestPaths.Add(steps.Value);    
+                shortestPaths.Add(steps.Value);
         }
-        
+
         _output.WriteLine(shortestPaths.Min().ToString());
     }
 
@@ -60,10 +62,10 @@ public class Day12 : AdventOfCodeTests
         while (queue.Count > 0)
         {
             var element = queue.Dequeue();
-            
+
             if(element.Steps > currentShortestPath.GetValueOrDefault(int.MaxValue))
                 continue;
-            
+
             if (element.Height == 'E')
                 return element.Steps;
 

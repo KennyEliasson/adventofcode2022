@@ -1,10 +1,10 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day10 : AdventOfCodeTests
 {
     public Day10(ITestOutputHelper output) : base(output)
     { }
-    
+
     public override void PartOne(List<string> lines)
     {
         var instructions = ParseInstructions(lines);
@@ -30,7 +30,7 @@ public class Day10 : AdventOfCodeTests
         {
             data.Add((i, cycles[i - 1], i * cycles[i - 1]));
         }
-        
+
         _output.WriteLine(data.Sum(x => x.result).ToString());
     }
 
@@ -62,7 +62,7 @@ public class Day10 : AdventOfCodeTests
                 cycles.Add(x);
                 cycle++;
             }
-            
+
             x = instruction.Execute(x);
         }
 

@@ -1,4 +1,4 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day4 : AdventOfCodeTests
 {
@@ -12,7 +12,7 @@ public class Day4 : AdventOfCodeTests
             var pairs = line.Split(',');
             var firstPairRange = pairs[0].Split('-').Select(int.Parse).ToList();
             var secondPairRange = pairs[1].Split('-').Select(int.Parse).ToList();
-            
+
             var firstRange = Enumerable.Range(firstPairRange[0], firstPairRange[1] - firstPairRange[0]+1).ToHashSet();
             var secondRange = Enumerable.Range(secondPairRange[0], secondPairRange[1] - secondPairRange[0]+1).ToHashSet();
 

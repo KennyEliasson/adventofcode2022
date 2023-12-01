@@ -1,16 +1,16 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day8 : AdventOfCodeTests
 {
 
     public Day8(ITestOutputHelper output) : base(output)
     { }
-    
+
     public override void PartOne(List<string> lines)
     {
         var columnCount = lines[0].Length;
         var rowCount = lines.Count;
-        
+
         var trees = CreateForest(lines);
 
         var visible = 0;
@@ -21,22 +21,22 @@ public class Day8 : AdventOfCodeTests
                 visible++;
                 continue;
             }
-            
+
             var treesInSameColumn = trees.Where(x => x.Column == tree.Column).ToList();
             var treesInSameRow = trees.Where(x => x.Row == tree.Row).ToList();
 
             var down = treesInSameColumn.Where(x => x.Row > tree.Row).Any(x => x.Height >= tree.Height);
             var up = treesInSameColumn.Where(x => x.Row < tree.Row).Any(x => x.Height >= tree.Height);
-                
+
             var right = treesInSameRow.Where(x => x.Column > tree.Column).Any(x => x.Height >= tree.Height);
             var left = treesInSameRow.Where(x => x.Column < tree.Column).Any(x => x.Height >= tree.Height);
-            
+
             if (!down || !up || !right || !left)
             {
                 visible++;
             }
         }
-        
+
         _output.WriteLine($"Visible tree count is {visible}");
     }
 
@@ -61,7 +61,7 @@ public class Day8 : AdventOfCodeTests
     {
         var columnCount = lines[0].Length;
         var rowCount = lines.Count;
-        
+
         var trees = CreateForest(lines);
 
         var scenicScores = new List<int>();
@@ -69,10 +69,10 @@ public class Day8 : AdventOfCodeTests
         {
             var down = trees.Where(x => x.Column == tree.Column && x.Row > tree.Row).ToList();
             var up = trees.Where(x => x.Column == tree.Column && x.Row < tree.Row).Reverse().ToList();
-                
+
             var right = trees.Where(x => x.Row == tree.Row && x.Column > tree.Column).ToList();
             var left = trees.Where(x => x.Row == tree.Row && x.Column < tree.Column).Reverse().ToList();
-            
+
             scenicScores.Add(CalculateScenicScore(down, tree) * CalculateScenicScore(up, tree) * CalculateScenicScore(right, tree) * CalculateScenicScore(left, tree));
         }
 

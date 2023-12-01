@@ -1,10 +1,12 @@
 using System.Text;
 
+namespace Solutions.Y2022;
+
 public class Day14 : AdventOfCodeTests
 {
     public Day14(ITestOutputHelper output) : base(output)
     {
-        
+
     }
 
     public override void PartOne(List<string> lines)
@@ -12,7 +14,7 @@ public class Day14 : AdventOfCodeTests
         var grid = MatrixExtensions.Create(1000, 1000, '.');
 
         var lowestPositionOfRock = CreateRocksInCave(lines, grid);
-        
+
         var sandList = new List<Sand>();
         var canSpawnSand = true;
         while (true)
@@ -36,16 +38,16 @@ public class Day14 : AdventOfCodeTests
                 grid[currentSand.Row, currentSand.Col] = 'o';
             }
         }
-        
+
         _output.WriteLine($"A total of {sandList.Count-1 } units of sand ");
 
         foreach (var builder in grid.Write())
         {
-            _output.WriteLine(builder.ToString());            
+            _output.WriteLine(builder.ToString());
         }
-        
+
     }
-    
+
     public override void PartTwo(List<string> lines)
     {
         var grid = MatrixExtensions.Create(1000, 1000, '.');
@@ -56,7 +58,7 @@ public class Day14 : AdventOfCodeTests
         {
             grid[lowestPositionOfRock + 2, i] = '#';
         }
-        
+
         var sandList = new List<Sand>();
         var canSpawnSand = true;
         while (true)
@@ -65,7 +67,7 @@ public class Day14 : AdventOfCodeTests
             {
                 if (grid[0, 500] == 'o')
                     break;
-                
+
                 sandList.Add(new Sand(0, 500));
                 canSpawnSand = false;
             }
@@ -78,12 +80,12 @@ public class Day14 : AdventOfCodeTests
                 grid[currentSand.Row, currentSand.Col] = 'o';
             }
         }
-        
+
         _output.WriteLine($"A total of {sandList.Count} units of sand ");
 
         foreach (var builder in grid.Write())
         {
-            _output.WriteLine(builder.ToString());            
+            _output.WriteLine(builder.ToString());
         }
     }
 
@@ -125,14 +127,14 @@ public class Day14 : AdventOfCodeTests
 
         return lowestRow;
     }
-    
+
 
     private (int Column, int Row) GetCoord(string position)
     {
         var split = position.Split(',');
         return (int.Parse(split[0]), int.Parse(split[1]));
     }
-   
+
     public class Sand
     {
         public int Row { get; set; }
@@ -143,7 +145,7 @@ public class Day14 : AdventOfCodeTests
             Row = row;
             Col = col;
         }
-        
+
         public bool TryMove(char[,] grid)
         {
             if (grid[Row + 1, Col] == '.')
@@ -158,7 +160,7 @@ public class Day14 : AdventOfCodeTests
                 Col -= 1;
                 return true;
             }
-            
+
             if (grid[Row + 1, Col + 1] == '.')
             {
                 Row += 1;

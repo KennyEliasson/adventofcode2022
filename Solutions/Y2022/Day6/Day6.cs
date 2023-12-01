@@ -1,4 +1,4 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
 public class Day6 : AdventOfCodeTests
 {

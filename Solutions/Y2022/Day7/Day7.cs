@@ -1,6 +1,6 @@
-namespace Solutions;
+namespace Solutions.Y2022;
 
-public class Day7 : AdventOfCodeTests 
+public class Day7 : AdventOfCodeTests
 {
     public Day7(ITestOutputHelper output) : base(output)
     { }
@@ -11,7 +11,7 @@ public class Day7 : AdventOfCodeTests
         var (root, directories) = CreateDirectoryStructure(commands);
 
         var dirsWithLessSize = directories.Where(x => x.TotalFileSize.Value < 100000).ToList();
-        
+
         _output.WriteLine($"The total size of directories with less than 100000 in size is {dirsWithLessSize.Sum(x => x.TotalFileSize.Value)}");
     }
 
@@ -24,7 +24,7 @@ public class Day7 : AdventOfCodeTests
         var usedSpace = rootDir.TotalFileSize.Value;
         var unusedSpace = 70000000 - usedSpace;
         var spaceLeftToUpdate = 30000000 - unusedSpace;
-        
+
         var chosenDir = directories.Where(x => x.TotalFileSize.Value > spaceLeftToUpdate).MinBy(x => x.TotalFileSize.Value);
 
         _output.WriteLine($"The directory to delete is {chosenDir.Name} with a size of {chosenDir.TotalFileSize}");
@@ -42,7 +42,7 @@ public class Day7 : AdventOfCodeTests
                 commands.Add(new LsCommand());
             else if (parts is ["dir", var directoryName])
                 commands.Last().Nodes.Add(new DirectoryNodeInfo(directoryName));
-            else if (parts is [var size, var fileName]) 
+            else if (parts is [var size, var fileName])
                 commands.Last().Nodes.Add(new FileNodeInfo(fileName, int.Parse(size)));
         }
 
@@ -112,7 +112,7 @@ public class CdCommand : Command
 
         if (Argument == "..")
             return directory.Parent;
-        
+
         return directory.Directories[Argument];
     }
 }
@@ -125,7 +125,7 @@ public class LsCommand : Command
         {
             node.AddToDirectory(directory);
         }
-        
+
         return directory;
     }
 }
