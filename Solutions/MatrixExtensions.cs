@@ -16,6 +16,14 @@ public static class MatrixExtensions
         value = matrix[column, row];
         return true;
     }
+    
+    public static void TryDo<T>(this T[,] matrix, int column, int row, Action<T> action)
+    {
+        if (matrix.TryGet(column, row, out var sign))
+        {
+            action(sign);
+        }
+    }
 
     public static T[,] Create<T>(int rows, int cols, T defaultVal)
     {
