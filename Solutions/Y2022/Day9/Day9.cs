@@ -37,20 +37,14 @@ public class Day9 : AdventOfCodeTests
 
     private static List<MoveCommand> ParseMoveCommands(List<string> lines)
     {
-        var actions = new List<MoveCommand>();
-
-        foreach (var line in lines)
-        {
-            actions.Add(line.Split(' ') switch
+        return lines.Select(line => line.Split(' ') switch
             {
                 ["U", var steps] => new MoveCommand(int.Parse(steps), knot => knot.Y -= 1),
                 ["D", var steps] => new MoveCommand(int.Parse(steps), knot => knot.Y += 1),
                 ["R", var steps] => new MoveCommand(int.Parse(steps), knot => knot.X += 1),
                 ["L", var steps] => new MoveCommand(int.Parse(steps), knot => knot.X -= 1),
-            });
-        }
-
-        return actions;
+            })
+            .ToList();
     }
 }
 

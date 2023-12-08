@@ -5,7 +5,7 @@ public class Day6 : AdventOfCodeTests
 
     public Day6(ITestOutputHelper output) : base(output)
     {
-        
+
     }
 
 
@@ -16,38 +16,32 @@ public class Day6 : AdventOfCodeTests
         {
             (7, 9), (15,40), (30, 200)
         };*/
-        
+
         var races = new List<(int time, long distance)>()
         {
             (42899189, 308117012911467)
         };
-        
+
         var raceWins = new List<int>();
         foreach (var race in races)
         {
             var wins = 0;
-            
+
             for (long i = 0; i < race.time; i++)
             {
                 var speed = i;
                 var left = race.time - i;
 
-                
+
                 long travel = speed * left;
                 if (travel > race.distance)
                     wins++;
-               // _output.WriteLine($"Pushed for {speed} ({left}) and raced {travel} mm");
             }
-            
+
             raceWins.Add(wins);
 
         }
 
-        
-        foreach (var win in raceWins)
-        {
-            
-        }
         _output.WriteLine(string.Join(", ", raceWins));
     }
 

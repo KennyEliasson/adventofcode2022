@@ -1,6 +1,6 @@
 namespace Solutions.Y2023;
 
-public partial class Day3 : AdventOfCodeTests
+public class Day3 : AdventOfCodeTests
 {
     public Day3(ITestOutputHelper output) : base(output)
     {
@@ -26,9 +26,9 @@ public partial class Day3 : AdventOfCodeTests
                 matrix.TryDo(column+1, sparePart.Row+1, c => adjacents.Add(c));
                 matrix.TryDo(column+1, sparePart.Row-1, c => adjacents.Add(c));
             }
-            
+
             var hit = adjacents.Any(x => x != '.' && !char.IsNumber(x));
-            
+
             if (hit)
             {
                 sum += sparePart.Number();
@@ -84,7 +84,7 @@ public partial class Day3 : AdventOfCodeTests
 
         return spareParts;
     }
-    
+
     public override void PartTwo(List<string> lines)
     {
         var spareParts = CreateSpareParts(lines);
@@ -106,7 +106,7 @@ public partial class Day3 : AdventOfCodeTests
                 }
             }
         }
-        
+
         _output.WriteLine($"Sum = {sum}");
     }
 }
